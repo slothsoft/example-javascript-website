@@ -105,15 +105,72 @@ You can see my _[package.json](package.json)_ for a more comprehensive example. 
 
 
 
+
+
+
 # 2. Transpile Code 
 
 So evidently NodeJS is only for creating server applications with JavaScript. Maybe I'll tackle this later but right now I want to create a simple website. 
 
-So… simple website, right? I created a small HTML page ([index.html](dist/index.html), a very basic CSS file ([style.css](dist/resources/css/style.css) and copied an image from my last vacation ([image](dist/resources/images/DSC00372.jpg)). The structure of the project is from [appcropolis](http://appcropolis.com/blog/web-technology/organize-html-css-javascript-files/).
+I created a file _src/box-office.js_ with a legendary algorithm:
+
+```js
+function calculatePrice(personCount) {
+	return 80.0 * personCount;
+}
+```
 
 
 
 # 3. Tests
+
+For creating tests I used [QUnit](https://qunitjs.com/) because it looked simple.
+
+And indeed for the legendary algorithm™ the tests look like this:
+
+```js
+QUnit.module("calculatePrice()", function() {
+	QUnit.test("for 0 persons", function(assert) {
+		assert.equal(calculatePrice(0), 0.0);
+	});
+	QUnit.test("for 1 person", function(assert) {
+		assert.equal(calculatePrice(1), 80.0);
+	});
+	QUnit.test("for 2 persons", function(assert) {
+		assert.equal(calculatePrice(2), 160.0);
+	});
+	// ...
+});
+```
+
+For me the most problematic part was the definition of equal: [equal(actual, expected)](https://api.qunitjs.com/assert/equal). Because I'm used to writing it the other way around (expected, then actual). 
+
+If you copy the QUnit example HTML page you can even see the tests work:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>QUnit Example</title>
+	<link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.9.2.css">
+</head>
+<body>
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+	<script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
+	<script src="../src/box-office.js"></script>
+	<script src="../test/box-office-test.js"></script>
+</body>
+</html>
+```
+
+(Example for a file _[dist/test.html](dist/test.html)_)
+
+The result looks something like this:
+
+![qunit](readme/03-qunit.png)
 
 
 
