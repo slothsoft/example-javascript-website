@@ -1,3 +1,5 @@
+var calculatePrice = require('../src/box-office.js')
+
 QUnit.module("calculatePrice()", function() {
 	QUnit.test("for 0 persons", function(assert) {
 		assert.equal(calculatePrice(0), 0.0);

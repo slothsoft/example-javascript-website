@@ -166,11 +166,72 @@ If you copy the QUnit example HTML page you can even see the tests work:
 </html>
 ```
 
-(Example for a file _[dist/test.html](dist/test.html)_)
+(Example for a file _dist/test.html_)
 
 The result looks something like this:
 
 ![qunit](readme/03-qunit.png)
+
+But we know if a human has to check the tests, then the human will become the problem, so I'd rather have the build process check the tests.
+
+First we want to install QUnit to the project using this command line:
+
+```
+npm install --save-dev qunit
+```
+
+During the execution the following happens:
+
+1. npm creates a file _[package-lock.json](package-lock.json)_ that contains all dependencies; it also tells us `You should commit this file.` 
+1. a folder _node&#x5f;modules/_ is created; this folder contains the dependencies as NodeJS modules; there is no reason to commit this folder, since you can generate it from the _package-lock.json_
+
+After the installation it's time to tell the project to run QUnit as test, so we'll change the following lines of the _package.json_:
+
+```json
+  "scripts": {
+    "test": "qunit"
+  }
+```
+
+If we run that now via `npm test` you'll get the following error:
+
+```
+ReferenceError: calculatePrice is not defined
+```
+
+It's clear that the test doesn't know the file with the  legendary algorithm™, so we'll add:
+
+```js
+calculatePrice = require('../src/box-office.js')
+```
+
+...and export the corresponding method:
+
+```js
+module.exports = function calculatePrice(personCount) {
+	return 80.0 * personCount;
+}
+```
+
+(**Note:** If you followed this step by step then the _index.html_ will stop working after these two changes, because `require()` and `module.exports` are NodeJS functions.)
+
+Execute the tests again and you'll get something like that:
+
+```
+TAP version 13
+ok 1 calculatePrice() > for 0 persons
+ok 2 calculatePrice() > for 1 person
+ok 3 calculatePrice() > for 2 persons
+ok 4 calculatePrice() > for 3 persons
+1..4
+# pass 4
+# skip 0
+# todo 0
+# fail 0
+```
+
+So tests work.
+
 
 
 
@@ -205,6 +266,6 @@ I've read a lot of stuff to come this far (which is not very far to be sure), bu
 - [How to Build a reusable Javascript development environment.](https://medium.com/the-andela-way/how-to-build-a-reusable-javascript-development-environment-f13146b77fdf)
 - [A crash course on testing with Node.js](https://hackernoon.com/a-crash-course-on-testing-with-node-js-6c7428d3da02)
 - [.gitignore Template for NodeJS](https://github.com/github/gitignore/blob/master/Node.gitignore)
-- [browserify on GitHub](https://github.com/browserify)
+- [browserify on GitHub](https://github.com/browserify/browserify)
 - [How to organize your HTML, CSS, and Javascript files](http://appcropolis.com/blog/web-technology/organize-html-css-javascript-files/)
 - [QUnit](https://qunitjs.com/)

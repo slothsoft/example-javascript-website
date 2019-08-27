@@ -1,4 +1,4 @@
 
-function calculatePrice(personCount) {
+module.exports = function calculatePrice(personCount) {
 	return 80.0 * personCount;
 }
