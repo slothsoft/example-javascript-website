@@ -101,7 +101,7 @@ This will generate a file _package,json_. A basic one looks something like this:
 
 ```
 
-You can see my _[package,json](package,json)_ for a more comprehensive example. Although maybe finish reading this document first, some properties will be explained.
+You can see my _[package.json](package.json)_ for a more comprehensive example. Although maybe finish reading this document first, some properties will be explained.
 
 
 
@@ -109,7 +109,7 @@ You can see my _[package,json](package,json)_ for a more comprehensive example. 
 
 So evidently NodeJS is only for creating server applications with JavaScript. Maybe I'll tackle this later but right now I want to create a simple website. 
 
-So… simple website, right? I created a small HTML page ([index.html](dist\index.html), a very basic CSS file ([style.css](dist\resources\css\style.css) and copied an image from my last vacation ([image](dist\resources\images\DSC00372.jpg)). The structure of the project is from [appcropolis](http://appcropolis.com/blog/web-technology/organize-html-css-javascript-files/).
+So… simple website, right? I created a small HTML page ([index.html](dist/index.html), a very basic CSS file ([style.css](dist/resources/css/style.css) and copied an image from my last vacation ([image](dist/resources/images/DSC00372.jpg)). The structure of the project is from [appcropolis](http://appcropolis.com/blog/web-technology/organize-html-css-javascript-files/).
 
 
 
