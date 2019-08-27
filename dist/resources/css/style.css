@@ -1,0 +1,30 @@
+body {
+  font-size: 10pt;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  color: black;
+  line-height: 14pt;
+  padding-left: 5pt;
+  padding-right: 5pt;
+  padding-top: 5pt;
+}
+h1 {
+  font-size: 14pt;
+  font-weight: bold;
+  line-height: 20pt;
+}
+img {
+  padding: 3pt;
+  float: right;
+}
+a {
+  text-decoration: none;
+}
+a:link, a:visited {
+  color: #8094d6;
+}
+a:hover, a:active {
+  color: #FF9933;
+}
+#content {
+  width: 800px;
+}

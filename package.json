@@ -1,0 +1,24 @@
+{
+  "name": "example-javascript-application",
+  "version": "1.0.0",
+  "description": "How to set up a JavaScript application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slothsoft/example-javascript-application"
+  },
+  "keywords": [
+    "example",
+    "javascript",
+    "application"
+  ],
+  "author": "Stef Schulz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/slothsoft/example-javascript-application/issues"
+  },
+  "homepage": "https://github.com/slothsoft/shera-translator/blob/master/README.md"
+}
