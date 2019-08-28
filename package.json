@@ -6,7 +6,8 @@
   "scripts": {
     "bundle": "browserify src/main.js | uglifyjs -o dist/resources/js/bundle.js",
     "watch": "watchify src/main.js -o dist/resources/js/bundle.js -v",
-    "test": "qunit"
+    "test": "qunit",
+    "deploy": "npm run test && npm run bundle"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/slothsoft/shera-translator/blob/master/README.md",
   "devDependencies": {
+    "qunit": "^2.9.2",
     "uglify-js": "^3.6.0"
   }
 }
