@@ -2,8 +2,9 @@
   "name": "example-javascript-application",
   "version": "1.0.0",
   "description": "How to set up a JavaScript application",
-  "main": "box-office.js",
+  "main": "main.js",
   "scripts": {
+    "bundle": "browserify src/main.js -o dist/resources/js/bundle.js",
     "test": "qunit"
   },
   "repository": {

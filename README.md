@@ -112,13 +112,70 @@ You can see my _[package.json](package.json)_ for a more comprehensive example. 
 
 So evidently NodeJS is only for creating server applications with JavaScript. Maybe I'll tackle this later but right now I want to create a simple website. 
 
-I created a file _src/box-office.js_ with a legendary algorithm:
+So... simple website, right? I created a small HTML page ([index.html](dist/index.html), a very basic CSS file ([style.css](dist/resources/css/style.css) and copied an image from my last vacation ([image](dist/resources/images/DSC00372.jpg)). The structure of the project is from [appcropolis](http://appcropolis.com/blog/web-technology/organize-html-css-javascript-files/):
+
+![structure](readme/02-structure.png)
+
+Check out the HTMl file. The important line is the following:
+
+```html
+<b>Price for Family:</b> $<span id="family-price"></span>
+```
+
+It gives us an entry point for our JavaScript. Speaking of which I created a file _[src/box-office.js](src/box-office.js)_ with a legendary algorithm:
 
 ```js
 function calculatePrice(personCount) {
 	return 80.0 * personCount;
 }
 ```
+
+And now I want to somehow get the result of the function into my HTML. So far everything's pretty standard. But now we'll work with NodeJS.
+
+NodeJS wants to have an actual application that does stuff, so let's create a  _[src/main.js](src/main.js)_:
+
+
+```js
+var calculatePrice = require('./box-office.js')
+
+document.getElementById('family-price').innerHTML = calculatePrice(4);
+```
+
+Now how do we get the NodeJS application into our nice little website? The answer is:  [browserify](https://github.com/browserify/browserify).
+
+We'll install it via command line:
+
+```
+npm install --save-dev browserify
+```
+
+(The tutorial on the browserify page suggests to use `npm install -g browserify` to install it globally. For me the above worked better for some reason.)
+
+During the execution of the above command line the following happens:
+
+1. npm creates a file _[package-lock.json](package-lock.json)_ that contains all dependencies; it also tells us `You should commit this file.` (so we probably should)
+1. a folder _node&#x5f;modules/_ is created; this folder contains the dependencies as NodeJS modules; there is no reason to commit this folder, since you can generate it from the _package-lock.json_
+
+Next we'll create a script in the _package.json_ file that bundles our "main" application into a file "bundle.js":
+
+```json
+  "scripts": {
+    "bundle": "browserify src/main.js -o dist/resources/js/bundle.js",
+  }
+```
+
+Run it via `npm browserify` and voilá: we have everything bundled nicely. We'll just add the script into our HTML page via the following line:
+
+```html
+<script src="resources/js/bundle.js"></script>
+```
+
+(I found out the hard way that this only works directly before the closing `</body>` tag.)
+
+![website](readme/02-website.png)
+ 
+Isn't it nice?
+
 
 
 
@@ -180,15 +237,11 @@ First we want to install QUnit to the project using this command line:
 npm install --save-dev qunit
 ```
 
-During the execution the following happens:
-
-1. npm creates a file _[package-lock.json](package-lock.json)_ that contains all dependencies; it also tells us `You should commit this file.` 
-1. a folder _node&#x5f;modules/_ is created; this folder contains the dependencies as NodeJS modules; there is no reason to commit this folder, since you can generate it from the _package-lock.json_
-
 After the installation it's time to tell the project to run QUnit as test, so we'll change the following lines of the _package.json_:
 
 ```json
   "scripts": {
+  	 "bundle": ...
     "test": "qunit"
   }
 ```
@@ -215,7 +268,7 @@ module.exports = function calculatePrice(personCount) {
 
 (**Note:** If you followed this step by step then the _index.html_ will stop working after these two changes, because `require()` and `module.exports` are NodeJS functions.)
 
-Execute the tests again and you'll get something like that:
+Execute the tests again using npm and you'll get something like that:
 
 ```
 TAP version 13
@@ -230,7 +283,7 @@ ok 4 calculatePrice() > for 3 persons
 # fail 0
 ```
 
-So tests work.
+So tests now work.
 
 
 
