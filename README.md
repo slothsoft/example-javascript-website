@@ -176,6 +176,52 @@ Run it via `npm browserify` and voilá: we have everything bundled nicely. We'll 
  
 Isn't it nice?
 
+But wait... the _bundle.js_ is still very big. So we'll add another module to minimize it, [uglify-js](https://www.npmjs.com/package/uglify-js).
+
+```
+npm install --save-dev uglify-js
+```
+
+(I'll keep adding these modules locally, because I have no idea why that would be a bad idea.)
+
+And then we extent the script:
+
+```json
+  "scripts": {
+    "bundle": "browserify src/main.js | uglifyjs -o dist/resources/js/bundle.js",
+  }
+```
+
+Even for such a small application this step saved us over 100 bytes (16% of the length of the file). 
+
+So all good but it's really annoying to create the bundle.js by hand. So we'll add another bundle to do this for us: [watchifiy](https://www.npmjs.com/package/watchify).
+
+We'll install it via:
+
+```
+npm install --save-dev watchify
+```
+
+And we'll add another script
+
+```json
+  "scripts": {
+    "bundle": ...
+    "watch": "watchify src/main.js -o dist/resources/js/bundle.js -v"
+  }
+```
+
+Run it via `npm watch` and you'll see the following anytime you change one of the files in _src/_:
+
+```
+860 bytes written to dist/resources/js/bundle.js (0.03 seconds) at 22:14:09
+860 bytes written to dist/resources/js/bundle.js (0.01 seconds) at 22:14:18
+860 bytes written to dist/resources/js/bundle.js (0.01 seconds) at 22:14:20
+```
+
+If you don't like the output, remove "-v" from the above script.
+
+So now we'll able to create a tightly packaged _bundle.js_ and are able to recreate  it on any change of the source files. Nice.
 
 
 
@@ -241,7 +287,8 @@ After the installation it's time to tell the project to run QUnit as test, so we
 
 ```json
   "scripts": {
-  	 "bundle": ...
+    "bundle": ...
+    "watch": ...
     "test": "qunit"
   }
 ```
@@ -290,6 +337,8 @@ So tests now work.
 
 # 4. Create WebApp
 
+Since we deploy the website directly to the server we don't need to do something special here. Our script "bundle" already creates a nice working website in the _dist/_ folder.
+
 
 
 # 5. Deploy Finished Product
@@ -318,7 +367,12 @@ I've read a lot of stuff to come this far (which is not very far to be sure), bu
 - [Configuring a basic environment for JavaScript development](https://italonascimento.github.io/configuring-a-basic-environment-for-javascript-development/)
 - [How to Build a reusable Javascript development environment.](https://medium.com/the-andela-way/how-to-build-a-reusable-javascript-development-environment-f13146b77fdf)
 - [A crash course on testing with Node.js](https://hackernoon.com/a-crash-course-on-testing-with-node-js-6c7428d3da02)
-- [.gitignore Template for NodeJS](https://github.com/github/gitignore/blob/master/Node.gitignore)
-- [browserify on GitHub](https://github.com/browserify/browserify)
 - [How to organize your HTML, CSS, and Javascript files](http://appcropolis.com/blog/web-technology/organize-html-css-javascript-files/)
+- [.gitignore Template for NodeJS](https://github.com/github/gitignore/blob/master/Node.gitignore)
+
+Used modules:
+
+- [browserify on GitHub](https://github.com/browserify/browserify)
+- [uglify-js](https://www.npmjs.com/package/uglify-js)
+- [watchifiy](https://www.npmjs.com/package/watchify)
 - [QUnit](https://qunitjs.com/)

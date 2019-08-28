@@ -4,7 +4,8 @@
   "description": "How to set up a JavaScript application",
   "main": "main.js",
   "scripts": {
-    "bundle": "browserify src/main.js -o dist/resources/js/bundle.js",
+    "bundle": "browserify src/main.js | uglifyjs -o dist/resources/js/bundle.js",
+    "watch": "watchify src/main.js -o dist/resources/js/bundle.js -v",
     "test": "qunit"
   },
   "repository": {
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/slothsoft/example-javascript-application/issues"
   },
-  "homepage": "https://github.com/slothsoft/shera-translator/blob/master/README.md"
+  "homepage": "https://github.com/slothsoft/shera-translator/blob/master/README.md",
+  "devDependencies": {
+    "uglify-js": "^3.6.0"
+  }
 }
