@@ -8,12 +8,13 @@ _WIP means I have no idea what I'm doing right now. Or if it makes sense. I hope
 - [1. Dependency Management](#1-dependency-management)
 - [2. Transpile Code](#2-transpile-code)
 - [3. Tests](#3-tests)
-- [4. Create WebApp](#4-create-webapp)
+- [4. Create Website](#4-create-website)
 - [5. Deploy Finished Product](#5-deploy-finished-product)
 - [6. Hook to CI Server](#6-hook-to-ci-server)
 - [7. Localization](#7-localization)
 - [Conclusion](#conclusion)
-  - [ External Links](#external-links)
+  - [Open Questions](#open-questions)
+  - [External Links](#external-links)
 
 
 
@@ -153,7 +154,7 @@ npm install --save-dev browserify
 
 During the execution of the above command line the following happens:
 
-1. npm creates a file _[package-lock.json](package-lock.json)_ that contains all dependencies; it also tells us `You should commit this file.` (so we probably should)
+1. npm creates a file _[package-lock.json](package-lock.json)_ that contains all dependencies; it also tells us `You should commit this file.` (but most modules I saw on GitHub still don't)
 1. a folder _node&#x5f;modules/_ is created; this folder contains the dependencies as NodeJS modules; there is no reason to commit this folder, since you can generate it from the _package-lock.json_
 
 Next we'll create a script in the _package.json_ file that bundles our "main" application into a file "bundle.js":
@@ -335,7 +336,7 @@ So tests now work.
 
 
 
-# 4. Create WebApp
+# 4. Create Website
 
 Since we deploy the website directly to the server we don't need to do something special here. Our script "bundle" already creates a nice working website in the _dist/_ folder.
 
@@ -343,13 +344,52 @@ Since we deploy the website directly to the server we don't need to do something
 
 # 5. Deploy Finished Product
 
+So now we have a website ready to deploy. We want to deploy it to a server, but what else do we want?
+
+1. Test the code (stop if there are errors)
+1. Bundle the code (because "watch" doesn't minify the code)
+1. Deploy
+
+We can already do the first two. So let's tackle the last one.
+
+[...more...]
+
 
 
 # 6. Hook to CI Server
 
 Before letting a CI server do anything to the code, we need to commit it. You can use this handy [.gitignore template for NodeJS](https://github.com/github/gitignore/blob/master/Node.gitignore) to figure out what to commit.
 
-[...more...]
+Hooking the project to a CI server is incredible easy for GitHub projects. That's why I love [Travis](https://travis-ci.org/).
+
+You only create a file _.travis.yml_:
+
+```
+language: node_js
+node_js:
+  - "stable"
+  - "10"
+```
+
+The entries below "node_js" tell Travis which NodeJS versions to test against. For simplicity's sake I'll use 10 (the current long term support) and the last stable version (currently 12).
+
+On default Travis executes `npm test`, which works nicely for us. 
+
+Log into Travis using your GitHub account, search your repository in your list and enable it: 
+
+![travis](readme/06-travis.png)
+
+That's it. You can trigger a build manually or wait for Travis to react to a commit. 
+
+The output will be the same as for the regular test runs. You can find this project's Travis configuration [here](https://travis-ci.org/slothsoft/example-javascript-application).
+
+**Note:** Why is it even important to use a CI server? 
+
+- You can check if your code (and development environment) has dependencies to something that's just on your machine, e.g. when I added Travis I found out I was still missing some dependencies 
+- Checks that the code in your repository still works, even if you forgot to run the tests (or _all_ the tests)
+- If you work with others, the frequent feedback from the tests allows for bugs to be found much sooner, so that the original author might still be able to fix them
+- You can test the code against different versions of dependencies 
+- And really, if you can automate some tasks, why wouldn't you? So tedious tasks like deploying to a development server should be done by a CI server.
 
 
 
@@ -360,6 +400,12 @@ Before letting a CI server do anything to the code, we need to commit it. You ca
 
 # Conclusion
 
+## Open Questions
+
+**Every time I install a new module, _package-lock.json_ will get scrambled and random previous installed modules will vanish. Why?**
+
+**Some modules inserted themselves into _package.json_ into "dependencies" or "devDependencies". Most didn't. Why?**
+
 ## External Links
 
 I've read a lot of stuff to come this far (which is not very far to be sure), but here are some of my resources:
@@ -368,11 +414,12 @@ I've read a lot of stuff to come this far (which is not very far to be sure), bu
 - [How to Build a reusable Javascript development environment.](https://medium.com/the-andela-way/how-to-build-a-reusable-javascript-development-environment-f13146b77fdf)
 - [A crash course on testing with Node.js](https://hackernoon.com/a-crash-course-on-testing-with-node-js-6c7428d3da02)
 - [How to organize your HTML, CSS, and Javascript files](http://appcropolis.com/blog/web-technology/organize-html-css-javascript-files/)
-- [.gitignore Template for NodeJS](https://github.com/github/gitignore/blob/master/Node.gitignore)
 
-Used modules:
+Used modules and other resources:
 
 - [browserify on GitHub](https://github.com/browserify/browserify)
 - [uglify-js](https://www.npmjs.com/package/uglify-js)
 - [watchifiy](https://www.npmjs.com/package/watchify)
 - [QUnit](https://qunitjs.com/)
+- [.gitignore Template for NodeJS](https://github.com/github/gitignore/blob/master/Node.gitignore)
+- [Travis](https://travis-ci.org/)
