@@ -1,8 +1,8 @@
 {
-  "name": "example-javascript-application",
+  "name": "example-javascript-website",
   "version": "1.0.0",
-  "description": "How to set up a JavaScript application",
-  "main": "main.js",
+  "description": "An example for setting up a static HTML website using well tested JavaScript.",
+  "main": "src/main.js",
   "scripts": {
     "bundle": "browserify src/main.js | uglifyjs -o dist/resources/js/bundle.js",
     "watch": "watchify src/main.js -o dist/resources/js/bundle.js -v",
@@ -11,21 +11,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/slothsoft/example-javascript-application"
+    "url": "git+https://github.com/slothsoft/example-javascript-website"
   },
   "keywords": [
     "example",
+    "html",
     "javascript",
-    "application"
+    "website"
   ],
   "author": "Stef Schulz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/slothsoft/example-javascript-application/issues"
+    "url": "https://github.com/slothsoft/example-javascript-website/issues"
   },
   "homepage": "https://github.com/slothsoft/shera-translator/blob/master/README.md",
   "devDependencies": {
     "qunit": "^2.9.2",
-    "uglify-js": "^3.6.0"
+    "uglify-js": "^3.6.0",
+    "watchify": "^3.11.1"
   }
 }

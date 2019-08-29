@@ -1,6 +1,10 @@
-# [WIP] Example JavaScript Application
+# [WIP] Example JavaScript Website
 
 _WIP means I have no idea what I'm doing right now. Or if it makes sense. I hope when I'm finished I will have learned both._
+
+An example for setting up a static HTML website using well tested JavaScript:
+
+![website](readme/02-website.png)
 
 **Content:**
 - [Preface](#preface)
@@ -20,7 +24,7 @@ _WIP means I have no idea what I'm doing right now. Or if it makes sense. I hope
 
 # Preface
 
-Let me preface this tutorial by saying: I'm not a JavaScript developer. I don't *want* to be a JavaScript developer. I've over ten years in Java and I don't plan to change that any time soon. 
+Let me preface this diary by saying: I'm not a JavaScript developer. I don't *want* to be a JavaScript developer. I've over ten years in Java and I don't plan to change that any time soon. 
 
 But I'm a firm believer of using the right tool for the job, so I'm trying to learn how to swing the JavaScript pocket knife, just in case I need something different than my Java hammer someday.
 
@@ -39,7 +43,7 @@ So I figure the same is needed for a JavaScript project (except we don't need a 
 
 So that's what I'm trying to get into this environment.
 
-Oh, and localization, even though that's a plain Java feature and not Maven. But it's needed in every application.
+Oh, and localization, even though that's a plain Java feature and not Maven. But it's needed for every application.
 
 So let's go!
 
@@ -381,7 +385,7 @@ Log into Travis using your GitHub account, search your repository in your list a
 
 That's it. You can trigger a build manually or wait for Travis to react to a commit. 
 
-The output will be the same as for the regular test runs. You can find this project's Travis configuration [here](https://travis-ci.org/slothsoft/example-javascript-application).
+The output will be the same as for the regular test runs. You can find this project's Travis configuration [here](https://travis-ci.org/slothsoft/example-javascript-website).
 
 **Note:** Why is it even important to use a CI server? 
 
