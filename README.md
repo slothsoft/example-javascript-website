@@ -1,6 +1,10 @@
-# [WIP] Example JavaScript Website
+# Example JavaScript Website
 
-_WIP means I have no idea what I'm doing right now. Or if it makes sense. I hope when I'm finished I will have learned both._
+[![MIT Licence](https://img.shields.io/github/license/jenkinsci/java-client-api.svg?label=License)](http://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.org/slothsoft/example-javascript-website.svg?branch=master)](https://travis-ci.org/slothsoft/example-javascript-website)
+
+- **Author:** [Stef Schulz](mailto:s.schulz@slothsoft.de)
+- **Repository:** <https://github.com/slothsoft/example-javascript-website>
+- **Open Issues:** <https://github.com/slothsoft/example-javascript-website/issues>
 
 An example for setting up a static HTML website using well tested JavaScript:
 
@@ -15,16 +19,20 @@ An example for setting up a static HTML website using well tested JavaScript:
 - [4. Create Website](#4-create-website)
 - [5. Deploy Finished Product](#5-deploy-finished-product)
 - [6. Hook to CI Server](#6-hook-to-ci-server)
+  - [Why is it important to use a CI server?](#why-is-it-important-to-use-a-ci-server)
 - [7. Localization](#7-localization)
 - [Conclusion](#conclusion)
-  - [Open Questions](#open-questions)
+  - [Questions](#questions)
   - [External Links](#external-links)
 
+**To Do:**
+- [5. Deploy Finished Product](#5-deploy-finished-product)
+- [7. Localization](#7-localization)
 
 
 # Preface
 
-Let me preface this diary by saying: I'm not a JavaScript developer. I don't *want* to be a JavaScript developer. I've over ten years in Java and I don't plan to change that any time soon. 
+Let me preface this document by saying: I'm not a JavaScript developer. I don't *want* to be a JavaScript developer. I've over ten years in Java and I don't plan to change that any time soon. 
 
 But I'm a firm believer of using the right tool for the job, so I'm trying to learn how to swing the JavaScript pocket knife, just in case I need something different than my Java hammer someday.
 
@@ -117,7 +125,7 @@ You can see my _[package.json](package.json)_ for a more comprehensive example. 
 
 So evidently NodeJS is only for creating server applications with JavaScript. Maybe I'll tackle this later but right now I want to create a simple website. 
 
-So... simple website, right? I created a small HTML page ([index.html](dist/index.html), a very basic CSS file ([style.css](dist/resources/css/style.css) and copied an image from my last vacation ([image](dist/resources/images/DSC00372.jpg)). The structure of the project is from [appcropolis](http://appcropolis.com/blog/web-technology/organize-html-css-javascript-files/):
+So... simple website, right? I created a small HTML page ([index.html](dist/index.html)), a very basic CSS file ([style.css](dist/resources/css/style.css)) and copied an image from my last vacation ([image](dist/resources/images/DSC00372.jpg)). The structure of the project is from [appcropolis](http://appcropolis.com/blog/web-technology/organize-html-css-javascript-files/):
 
 ![structure](readme/02-structure.png)
 
@@ -135,7 +143,7 @@ function calculatePrice(personCount) {
 }
 ```
 
-And now I want to somehow get the result of the function into my HTML. So far everything's pretty standard. But now we'll work with NodeJS.
+And now I want to somehow get the result of the function into my HTML. So far everything's pretty standard, but now we'll work with NodeJS.
 
 NodeJS wants to have an actual application that does stuff, so let's create a  _[src/main.js](src/main.js)_:
 
@@ -199,7 +207,7 @@ And then we extent the script:
 
 Even for such a small application this step saved us over 100 bytes (16% of the length of the file). 
 
-So all good but it's really annoying to create the bundle.js by hand. So we'll add another bundle to do this for us: [watchifiy](https://www.npmjs.com/package/watchify).
+So all is good but it's really annoying to create the _bundle.js_ by hand. We'll just add another bundle to do this for us: [watchifiy](https://www.npmjs.com/package/watchify).
 
 We'll install it via:
 
@@ -207,7 +215,7 @@ We'll install it via:
 npm install --save-dev watchify
 ```
 
-And we'll add another script
+And we'll add another script:
 
 ```json
   "scripts": {
@@ -232,9 +240,9 @@ So now we'll able to create a tightly packaged _bundle.js_ and are able to recre
 
 # 3. Tests
 
-For creating tests I used [QUnit](https://qunitjs.com/) because it looked simple.
+For creating tests I used [QUnit](https://qunitjs.com/) because it looked simple. As with everything here there are a bunch of options around. I've personally worked with [jasmine](https://jasmine.github.io/) and [mocha](https://mochajs.org/) as well.
 
-And indeed for the legendary algorithm™ the tests look like this:
+Using QUnit the tests for the legendary algorithm™ look like this:
 
 ```js
 QUnit.module("calculatePrice()", function() {
@@ -356,7 +364,7 @@ So now we have a website ready to deploy. We want to deploy it to a server, but 
 
 We can already do the first two. So let's tackle the last one.
 
-[...more...]
+TODO: I've not yet found out how to do this with NodeJS. Or without. [ftp-deploy](https://github.com/simonh1000/ftp-deploy) looked promising up to the point where you have a file with a username/password in your SCM. Didn't work either (`ENOTFOUND`).
 
 
 
@@ -387,28 +395,50 @@ That's it. You can trigger a build manually or wait for Travis to react to a com
 
 The output will be the same as for the regular test runs. You can find this project's Travis configuration [here](https://travis-ci.org/slothsoft/example-javascript-website).
 
-**Note:** Why is it even important to use a CI server? 
+## Why is it important to use a CI server? 
 
 - You can check if your code (and development environment) has dependencies to something that's just on your machine, e.g. when I added Travis I found out I was still missing some dependencies 
-- Checks that the code in your repository still works, even if you forgot to run the tests (or _all_ the tests)
+- Checks that the code in your repository still works, even if you forgot to run some of the tests (or _all_ the tests)
 - If you work with others, the frequent feedback from the tests allows for bugs to be found much sooner, so that the original author might still be able to fix them
 - You can test the code against different versions of dependencies 
-- And really, if you can automate some tasks, why wouldn't you? So tedious tasks like deploying to a development server should be done by a CI server.
+- And really, if you can automate some tasks, why wouldn't you? Tedious tasks like deploying to a development server should be done by a CI server.
 
 
 
 # 7. Localization
 
+TODO: ...coming soon...
 
 
 
 # Conclusion
 
-## Open Questions
+So now I've created a working environment to create a static HTML website with well tested NodeJS JavaScript.  And if you followed this guide you might have, too. Or you can just download this repository if you like. I bet I will in the future. 
+
+If you find mistakes of any kind just [write me an email](mailto:s.schulz@slothsoft.de) or [raise an issue](<https://github.com/slothsoft/example-javascript-website/issues>). I love to learn new stuff, so I'll be thrilled to hear from you! 
+
+
+
+## Questions
 
 **Every time I install a new module, _package-lock.json_ will get scrambled and random previous installed modules will vanish. Why?**
 
-**Some modules inserted themselves into _package.json_ into "dependencies" or "devDependencies". Most didn't. Why?**
+I assume this has to do with the following question. The dependencies were missing from the _package.json_, so they weren't taking into account for the generation of the _package-lock.json_.
+
+
+**Some modules inserted themselves into _package.json_ -> "dependencies" or "devDependencies". Most didn't. Why?**
+
+Sometimes there is the following warning during the installation:
+
+```
+npm WARN saveError EPERM: operation not permitted, rename 'S:\path\to\project\package.json.3710518402' -> 'S:\path\to\project\package.json'
+```
+
+(Which really, _really_ should be an error, because it prevents the dependency from being permanent.)
+
+In my case the folder _node&#x5f;modules/_ was set to read only. After removing that flag the above warning vanished and the dependency was added to the _package.json_ file correctly.
+
+
 
 ## External Links
 
