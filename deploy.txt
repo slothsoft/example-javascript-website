@@ -1,0 +1,38 @@
+open <my-website.de>
+<username>
+<password>
+
+lcd ./dist
+prompt
+
+cd /htdocs/
+mkdir example-javascript-website
+cd example-javascript-website
+mput *.html
+
+mkdir resources
+cd resources
+lcd resources
+
+mkdir css
+cd css
+lcd css
+mput *.css
+cd ..
+lcd ..
+
+mkdir images
+cd images
+lcd images
+mput *.*
+cd ..
+lcd ..
+
+mkdir js
+cd js
+lcd js
+mput *.js
+cd ..
+lcd ..
+
+bye

@@ -5,6 +5,7 @@
 - **Author:** [Stef Schulz](mailto:s.schulz@slothsoft.de)
 - **Repository:** <https://github.com/slothsoft/example-javascript-website>
 - **Open Issues:** <https://github.com/slothsoft/example-javascript-website/issues>
+- **Website:** [http://app.slothsoft.de](http://app.slothsoft.de/example-javascript-website)
 
 An example for setting up a static HTML website using well tested JavaScript:
 
@@ -26,7 +27,6 @@ An example for setting up a static HTML website using well tested JavaScript:
   - [External Links](#external-links)
 
 **To Do:**
-- [5. Deploy Finished Product](#5-deploy-finished-product)
 - [7. Localization](#7-localization)
 
 
@@ -364,7 +364,53 @@ So now we have a website ready to deploy. We want to deploy it to a server, but 
 
 We can already do the first two. So let's tackle the last one.
 
-TODO: I've not yet found out how to do this with NodeJS. Or without. [ftp-deploy](https://github.com/simonh1000/ftp-deploy) looked promising up to the point where you have a file with a username/password in your SCM. Didn't work either (`ENOTFOUND`).
+FTP is standard for Windows, so I used this for now ( [ftp-deploy](https://github.com/simonh1000/ftp-deploy) didn't work for me (`ENOTFOUND`)).
+
+I use `ftp -s:deploy.txt` on the command line to run this script ([deploy.txt](deploy.txt)):
+
+```
+open <my-website.de>
+<username>
+<password>
+
+lcd ./dist
+prompt
+
+cd /htdocs/
+mkdir example-javascript-website
+cd example-javascript-website
+mput *.html
+
+mkdir resources
+cd resources
+lcd resources
+
+mkdir css
+cd css
+lcd css
+mput *.css
+cd ..
+lcd ..
+
+mkdir images
+cd images
+lcd images
+mput *.*
+cd ..
+lcd ..
+
+mkdir js
+cd js
+lcd js
+mput *.js
+cd ..
+lcd ..
+
+bye
+```
+
+This script is incredible complicated even for a website this small, so you should probably replace this with another FTP client.
+
 
 
 
