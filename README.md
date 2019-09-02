@@ -48,7 +48,7 @@ So I figure the same is needed for a JavaScript project (except we don't need a 
 
 So that's what I'm trying to get into this environment.
 
-Oh, and localization, even though that's a plain Java feature and not Maven. But it's needed for every application.
+Oh, and localization, even though that's a plain Java feature and not Maven. But it's needed for every application. Note that this is no tutorial, it's a diary where I try to understand what I'm doing.
 
 So let's go!
 
@@ -159,7 +159,7 @@ We'll install it via command line:
 npm install --save-dev browserify
 ```
 
-(The tutorial on the browserify page suggests to use `npm install -g browserify` to install it globally. For me the above worked better for some reason.)
+(The tutorial on the browserify page suggests using `npm install -g browserify` to install it globally. For me the above worked better for some reason.)
 
 During the execution of the above command line the following happens:
 
@@ -231,7 +231,7 @@ Run it via `npm watch` and you'll see the following anytime you change one of th
 
 If you don't like the output, remove "-v" from the above script.
 
-So now we'll able to create a tightly packaged _bundle.js_ and are able to recreate  it on any change of the source files. Nice.
+So now we're able to create a tightly packaged _bundle.js_ and are able to recreate it on any change of the source files. Nice.
 
 
 
@@ -323,7 +323,7 @@ module.exports = function calculatePrice(personCount) {
 }
 ```
 
-(**Note:** If you followed this step by step then the _index.html_ will stop working after these two changes, because `require()` and `module.exports` are NodeJS functions.)
+(**Note:** If you followed this step by step then the _dist/test.html_ will stop working after these two changes, because `require()` and `module.exports` are NodeJS functions.)
 
 Execute the tests again using npm and you'll get something like that:
 
@@ -415,7 +415,7 @@ This script is incredible complicated even for a website this small, so you shou
 
 Before letting a CI server do anything to the code, we need to commit it. You can use this handy [.gitignore template for NodeJS](https://github.com/github/gitignore/blob/master/Node.gitignore) to figure out what to commit.
 
-Hooking the project to a CI server is incredible easy for GitHub projects. That's why I love [Travis](https://travis-ci.org/).
+Hooking the project to a CI server is incredibly easy for GitHub projects. That's why I love [Travis](https://travis-ci.org/).
 
 You only create a file _.travis.yml_:
 
@@ -442,7 +442,7 @@ The output will be the same as for the regular test runs. You can find this proj
 
 - You can check if your code (and development environment) has dependencies to something that's just on your machine, e.g. when I added Travis I found out I was still missing some dependencies 
 - Checks that the code in your repository still works, even if you forgot to run some of the tests (or _all_ the tests)
-- If you work with others, the frequent feedback from the tests allows for bugs to be found much sooner, so that the original author might still be able to fix them
+- If you work with others, frequent feedback from the tests allows for bugs to be found much sooner, so that the original author might still be able to fix them
 - You can test the code against different versions of dependencies 
 - And really, if you can automate some tasks, why wouldn't you? Tedious tasks like deploying to a development server should be done by a CI server.
 
@@ -478,7 +478,7 @@ So the JSON files for translating look like this:
 }
 ```
 
-I created another JavaScript file to init these messages files (so that the test can use them as well): 
+I created another JavaScript file to include these messages files (so that the test can use them as well) inside the file - _[src/init-i18n.js](src/init-i18n.js)_: 
 
 ```js
 const localizify = require('localizify');

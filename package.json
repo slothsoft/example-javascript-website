@@ -24,7 +24,7 @@
   "bugs": {
     "url": "https://github.com/slothsoft/example-javascript-website/issues"
   },
-  "homepage": "https://github.com/slothsoft/shera-translator/blob/master/README.md",
+  "homepage": "https://github.com/slothsoft/example-javascript-website/blob/master/README.md",
   "devDependencies": {
     "qunit": "^2.9.2",
     "butternut": "^0.4.6",
