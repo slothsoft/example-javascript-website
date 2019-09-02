@@ -26,9 +26,6 @@ An example for setting up a static HTML website using well tested JavaScript:
   - [Questions](#questions)
   - [External Links](#external-links)
 
-**To Do:**
-- [7. Localization](#7-localization)
-
 
 # Preface
 
@@ -177,7 +174,7 @@ Next we'll create a script in the _package.json_ file that bundles our "main" ap
   }
 ```
 
-Run it via `npm browserify` and voil·: we have everything bundled nicely. We'll just add the script into our HTML page via the following line:
+Run it via `npm browserify` and voil√°: we have everything bundled nicely. We'll just add the script into our HTML page via the following line:
 
 ```html
 <script src="resources/js/bundle.js"></script>
@@ -189,10 +186,10 @@ Run it via `npm browserify` and voil·: we have everything bundled nicely. We'll 
  
 Isn't it nice?
 
-But wait... the _bundle.js_ is still very big. So we'll add another module to minimize it, [uglify-js](https://www.npmjs.com/package/uglify-js).
+But wait... the _bundle.js_ is still very big. So we'll add another module to minimize it, [Butternut](https://github.com/Rich-Harris/butternut).
 
 ```
-npm install --save-dev uglify-js
+npm install --save-dev butternut
 ```
 
 (I'll keep adding these modules locally, because I have no idea why that would be a bad idea.)
@@ -201,7 +198,7 @@ And then we extent the script:
 
 ```json
   "scripts": {
-    "bundle": "browserify src/main.js | uglifyjs -o dist/resources/js/bundle.js",
+    "bundle": "browserify src/main.js | squash > dist/resources/js/bundle.js",
   }
 ```
 
@@ -242,7 +239,7 @@ So now we'll able to create a tightly packaged _bundle.js_ and are able to recre
 
 For creating tests I used [QUnit](https://qunitjs.com/) because it looked simple. As with everything here there are a bunch of options around. I've personally worked with [jasmine](https://jasmine.github.io/) and [mocha](https://mochajs.org/) as well.
 
-Using QUnit the tests for the legendary algorithmô look like this:
+Using QUnit the tests for the legendary algorithm‚Ñ¢ look like this:
 
 ```js
 QUnit.module("calculatePrice()", function() {
@@ -312,7 +309,7 @@ If we run that now via `npm test` you'll get the following error:
 ReferenceError: calculatePrice is not defined
 ```
 
-It's clear that the test doesn't know the file with the  legendary algorithmô, so we'll add:
+It's clear that the test doesn't know the file with the  legendary algorithm‚Ñ¢, so we'll add:
 
 ```js
 calculatePrice = require('../src/box-office.js')
@@ -453,7 +450,60 @@ The output will be the same as for the regular test runs. You can find this proj
 
 # 7. Localization
 
-TODO: ...coming soon...
+To localize the app I used [localizify](https://github.com/noveogroup-amorgunov/localizify), because it has no other dependencies:
+
+```
+npm install localizify --save
+```
+
+Note that this is the first time a dependency is added to the property "dependencies" instead of "devDependencies" in the _package.json_ file.
+
+The tutorial for localizify is pretty straight forward. Since I don't really want to complicate my small HTML page, I added the localization only for the currency symbol.
+
+So the JSON files for translating look like this:
+
+[en.json](en.json):
+
+```json 
+{
+  "currency": "${value}",
+}
+```
+
+[de.json](de.json) (or any other EU country): 
+
+```json
+{
+  "currency": "{value} ‚Ç¨",
+}
+```
+
+I created another JavaScript file to init these messages files (so that the test can use them as well): 
+
+```js
+const localizify = require('localizify');
+
+const en = require('./messages/en.json');
+const de = require('./messages/de.json');
+
+localizify.add('en', en).add('de', de);
+
+var userLang = navigator.language || navigator.userLanguage; 
+localizify.setLocale(userLang);
+
+module.exports = localizify;
+```
+
+And finally copied our legendary algorithm‚Ñ¢ and its test so I can create versions with localization:
+
+- _[src/international-box-office.js](src/international-box-office.js)_
+- _[test/international-box-office-test.js](test/international-box-office-test.js)_
+
+So now we can open two versions of the website:
+
+![i18n](readme/07-i18n.png)
+
+Left a German browser, right an American English one. 
 
 
 
@@ -498,8 +548,9 @@ I've read a lot of stuff to come this far (which is not very far to be sure), bu
 Used modules and other resources:
 
 - [browserify on GitHub](https://github.com/browserify/browserify)
-- [uglify-js](https://www.npmjs.com/package/uglify-js)
+- [Butternut](https://github.com/Rich-Harris/butternut)
 - [watchifiy](https://www.npmjs.com/package/watchify)
 - [QUnit](https://qunitjs.com/)
 - [.gitignore Template for NodeJS](https://github.com/github/gitignore/blob/master/Node.gitignore)
 - [Travis](https://travis-ci.org/)
+- [localizify](https://github.com/noveogroup-amorgunov/localizify)
