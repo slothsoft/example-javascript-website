@@ -361,53 +361,52 @@ So now we have a website ready to deploy. We want to deploy it to a server, but 
 
 We can already do the first two. So let's tackle the last one.
 
-FTP is standard for Windows, so I used this for now ( [ftp-deploy](https://github.com/simonh1000/ftp-deploy) didn't work for me (`ENOTFOUND`)).
-
-I use `ftp -s:deploy.txt` on the command line to run this script ([deploy.txt](deploy.txt)):
+There is a pretty easy to use module already in NodeJS to deploy websites: [ftp-deploy](https://www.npmjs.com/package/ftp-deploy). So we install it:
 
 ```
-open <my-website.de>
-<username>
-<password>
-
-lcd ./dist
-prompt
-
-cd /htdocs/
-mkdir example-javascript-website
-cd example-javascript-website
-mput *.html
-
-mkdir resources
-cd resources
-lcd resources
-
-mkdir css
-cd css
-lcd css
-mput *.css
-cd ..
-lcd ..
-
-mkdir images
-cd images
-lcd images
-mput *.*
-cd ..
-lcd ..
-
-mkdir js
-cd js
-lcd js
-mput *.js
-cd ..
-lcd ..
-
-bye
+npm install --save-dev ftp-deploy
 ```
 
-This script is incredible complicated even for a website this small, so you should probably replace this with another FTP client.
+Since I want to commit the actual code to deploy without compromising my server's login and password, I have two files: _[deploy.js](deploy.js)_ for the general config and _[deploy-config.json](deploy-config.json)_ for security relevant info (this file should not be committed).
 
+So the _deploy.js_ looks like this:
+
+```js
+var FtpDeploy = require('ftp-deploy');
+var ftpDeploy = new FtpDeploy();
+
+var serverConfig = require('./deploy-config.json');
+var generalConfig = {
+    port: 21,
+    localRoot: __dirname + '/dist/',
+    remoteRoot: '/htdocs/app/example-javascript-website/',
+    include: ['*', '**/*'],
+    deleteRemote: true,
+    forcePasv: true
+};
+var mergedConfig = {...generalConfig, ...serverConfig};
+
+
+ftpDeploy.deploy(mergedConfig, function(err, res) {
+    if (err) console.log(err)
+    else console.log('Finished:', res);
+});
+```
+
+This script overwrites the config of `generalConfig` with whatever is present in the _deploy-config.json_. Username, password and host are mandatory, but you can overwrite the port or something else if you feel like it. 
+
+I'd leave a template in the repository, but mark the file as non-committable (`--assume-unchanged` in Git). Then each committer would have to replace the authorization data once upon checkout.  
+
+We run the script via `node deploy.js` which leaves the deploy script as:
+
+```json
+  "scripts": {
+    "bundle": ...
+    "watch": ...
+    "test": ...
+    "deploy": "npm run test && npm run bundle && node deploy.js"
+  }
+```
 
 
 

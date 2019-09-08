@@ -7,7 +7,7 @@
     "bundle": "browserify src/main.js | squash > dist/resources/js/bundle.js",
     "watch": "watchify src/main.js -o dist/resources/js/bundle.js -v",
     "test": "qunit",
-    "deploy": "npm run test && npm run bundle && ftp -s:deploy.txt"
+    "deploy": "npm run test && npm run bundle && node deploy.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
   "devDependencies": {
     "qunit": "^2.9.2",
     "butternut": "^0.4.6",
+    "ftp-deploy": "^2.3.3",
     "watchify": "^3.11.1"
   },
   "dependencies": {
